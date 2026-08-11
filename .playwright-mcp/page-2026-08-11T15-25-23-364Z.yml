@@ -1,0 +1,119 @@
+- generic [ref=e2]:
+  - link "Skip to content" [ref=e3] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e5]:
+    - generic [ref=e6]: AyanOS v1.0 — boot
+    - status [ref=e9]:
+      - generic [ref=e10]: ▋
+    - button "Skip [esc]" [ref=e12]
+  - banner [ref=e13]:
+    - button "Toggle explorer" [expanded] [ref=e19]: ☰
+    - generic [ref=e20]: AyanOS v1.0
+    - generic [ref=e21]: "Ctrl/⌘` terminal"
+  - generic [ref=e22]:
+    - navigation "Primary" [ref=e23]:
+      - button "Explorer" [pressed] [ref=e24]:
+        - generic [ref=e25]: ▤
+      - button "Open terminal" [ref=e26]:
+        - generic [ref=e27]: ⌕
+      - button "GitHub stats" [ref=e28]:
+        - generic [ref=e29]: ⎇
+      - button "Skills" [ref=e30]:
+        - generic [ref=e31]: ▦
+    - complementary [ref=e32]:
+      - generic [ref=e33]: Explorer
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36]: ▾
+          - generic [ref=e37]: AYAN-PORTFOLIO
+        - list [ref=e38]:
+          - listitem [ref=e39]:
+            - button "about.md" [ref=e40]:
+              - generic [ref=e41]: M
+          - listitem [ref=e43]:
+            - button "skills.json" [ref=e44]:
+              - generic [ref=e45]: "{}"
+          - listitem [ref=e47]:
+            - button "projects/" [ref=e48]:
+              - generic [ref=e49]: ▸
+          - listitem [ref=e51]:
+            - button "leetcode.log" [ref=e52]:
+              - generic [ref=e53]: ≡
+          - listitem [ref=e55]:
+            - button "github.stats" [ref=e56]:
+              - generic [ref=e57]: ★
+          - listitem [ref=e59]:
+            - button "resume.pdf" [ref=e60]:
+              - generic [ref=e61]: ▤
+          - listitem [ref=e63]:
+            - button "contact.md" [ref=e64]:
+              - generic [ref=e65]: "@"
+        - generic [ref=e67]:
+          - generic [ref=e68]: Live Status
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - generic [ref=e72]: "learning:"
+              - generic [ref=e73]: React
+            - generic [ref=e74]:
+              - generic [ref=e75]: "goal:"
+              - generic [ref=e76]: Software Engineering Internship
+            - generic [ref=e77]:
+              - generic [ref=e78]: "status:"
+              - generic [ref=e79]: Building Something Cool
+    - main [ref=e80]:
+      - generic [ref=e82]:
+        - button "about.md" [ref=e83]:
+          - generic [ref=e84]: M
+        - button "Close about.md" [ref=e86]: ✕
+      - generic [ref=e87]: AYAN-PORTFOLIO › about.md
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - generic [ref=e94]: AR
+            - generic "Available" [ref=e95]
+          - generic [ref=e96]:
+            - generic [ref=e97]: ~/about.md
+            - generic [ref=e98]: Open to opportunities
+          - generic [ref=e100]:
+            - link "GitHub" [ref=e101] [cursor=pointer]:
+              - /url: https://github.com/ayan-singha-roy
+              - generic [ref=e102]: ⎇
+            - link "LinkedIn" [ref=e103] [cursor=pointer]:
+              - /url: https://linkedin.com/in/ayan-singha-roy
+              - generic [ref=e104]: in
+            - link "Instagram" [ref=e105] [cursor=pointer]:
+              - /url: https://instagram.com/ayan.singharoy
+              - generic [ref=e106]: ◎
+            - link "Email" [ref=e107] [cursor=pointer]:
+              - /url: mailto:ayan.singharoy@example.com
+              - generic [ref=e108]: "@"
+        - article [ref=e109]:
+          - heading "# Ayan Singha Roy" [level=1] [ref=e110]
+          - generic [ref=e111]: B.Tech CSE (AI & ML)
+          - paragraph [ref=e112]: Passionate about building software, learning web development, solving coding problems, and exploring AI. I like shipping things that work, then making them faster.
+          - heading "## Current Focus" [level=2] [ref=e113]
+          - list [ref=e114]:
+            - listitem [ref=e115]: + React
+            - listitem [ref=e116]: + Full Stack Development
+            - listitem [ref=e117]: + DSA
+            - listitem [ref=e118]: + AI/ML
+          - heading "## Location" [level=2] [ref=e119]
+          - paragraph [ref=e120]: West Bengal, India
+          - generic [ref=e121]:
+            - link "Contact me" [ref=e122] [cursor=pointer]:
+              - /url: mailto:ayan.singharoy@example.com
+            - link "GitHub ↗" [ref=e123] [cursor=pointer]:
+              - /url: https://github.com/ayan-singha-roy
+  - contentinfo [ref=e124]:
+    - generic [ref=e125]:
+      - generic [ref=e126]: ⎇
+      - generic [ref=e127]: main
+      - generic [ref=e128]: ●
+      - generic [ref=e129]: 0 problems
+      - generic [ref=e130]: UTF-8
+    - generic [ref=e131]:
+      - generic [ref=e132]: Python
+      - generic [ref=e133]: React
+      - generic [ref=e134]: Open to Opportunities
+  - button "Open terminal" [ref=e136]:
+    - generic [ref=e137]: ">_"
