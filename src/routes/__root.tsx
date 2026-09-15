@@ -125,9 +125,10 @@ const jsonLd = {
   url: SITE.url,
   jobTitle: "B.Tech CSE (AI & ML)",
   sameAs: [
-    "https://github.com/ayan-singha-roy",
-    "https://linkedin.com/in/ayan-singha-roy",
-    "https://instagram.com/ayan.singharoy",
+    "https://github.com/sroyayan",
+    "https://www.linkedin.com/in/sroyayan",
+    "https://leetcode.com/u/ayanrsoy/",
+    "https://www.instagram.com/4yan_s.r0y/",
   ],
   knowsAbout: [
     "Python",
@@ -144,6 +145,12 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('ayanos-theme');if(t==='hacker'){document.documentElement.setAttribute('data-theme','hacker')}}catch(e){}})();",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

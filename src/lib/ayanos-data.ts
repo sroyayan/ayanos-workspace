@@ -2,7 +2,7 @@ export type FileId =
   | "about.md"
   | "skills.json"
   | "projects"
-  | "leetcode.log"
+  | "leetcode.stats"
   | "github.stats"
   | "resume.pdf"
   | "contact.md";
@@ -11,7 +11,7 @@ export const FILE_ORDER: FileId[] = [
   "about.md",
   "skills.json",
   "projects",
-  "leetcode.log",
+  "leetcode.stats",
   "github.stats",
   "resume.pdf",
   "contact.md",
@@ -36,24 +36,34 @@ export const PROFILE = {
   location: "West Bengal, India",
   // TODO: replace with the real email before going live
   email: "ayan.singharoy@example.com",
-  github: "https://github.com/ayan-singha-roy",
-  linkedin: "https://linkedin.com/in/ayan-singha-roy",
-  instagram: "https://instagram.com/ayan.singharoy",
+  github: "https://github.com/sroyayan",
+  githubUsername: "sroyayan",
+  linkedin: "https://linkedin.com/in/sroyayan",
+  leetcode: "https://leetcode.com/u/ayanrsoy/",
+  leetcodeUsername: "ayanrsoy",
+  instagram: "https://www.instagram.com/4yan_s.r0y/",
 };
 
 export const SOCIALS = [
-  { key: "github", label: "GitHub", handle: "@ayan-singha-roy", href: PROFILE.github, icon: "⎇" },
+  { key: "github", label: "GitHub", handle: "@sroyayan", href: PROFILE.github, icon: "⎇" },
+  {
+    key: "leetcode",
+    label: "LeetCode",
+    handle: "u/ayanrsoy",
+    href: PROFILE.leetcode,
+    icon: "λ",
+  },
   {
     key: "linkedin",
     label: "LinkedIn",
-    handle: "in/ayan-singha-roy",
+    handle: "in/sroyayan",
     href: PROFILE.linkedin,
     icon: "in",
   },
   {
     key: "instagram",
     label: "Instagram",
-    handle: "@ayan.singharoy",
+    handle: "@4yan_s.r0y",
     href: PROFILE.instagram,
     icon: "◎",
   },
@@ -119,56 +129,49 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
-    id: "downtube",
-    name: "DownTube",
-    description: "A clean YouTube video & audio downloader with format selection.",
-    tech: ["Python", "Flask", "pytube"],
-    features: ["MP4 / MP3 export", "Quality picker", "Batch queue", "Dark UI"],
-    github: "https://github.com/ayan-singha-roy/downtube",
+    id: "agriguard-ai",
+    name: "AgriGuard AI",
+    description:
+      "AI-powered agricultural pest detection and decision support system using YOLOv11.",
+    tech: ["Python", "YOLOv11", "Jupyter"],
+    features: ["Pest detection", "Decision support", "Computer vision"],
+    github: "https://github.com/sroyayan/AgriGuard-AI",
     status: "live",
   },
   {
-    id: "morse",
-    name: "Morse Code Generator",
-    description: "Text ↔ Morse converter with audio playback and visual flash.",
-    tech: ["JavaScript", "Web Audio API", "HTML/CSS"],
-    features: ["Bidirectional convert", "Audio output", "Speed control"],
-    github: "https://github.com/ayan-singha-roy/morse-code",
-    status: "live",
-  },
-  {
-    id: "team-portfolio",
-    name: "Team Portfolio Website",
-    description: "Hackathon team site — built end-to-end in one weekend.",
-    tech: ["React", "Tailwind", "Framer Motion"],
-    features: ["Member cards", "Project gallery", "Contact form"],
-    github: "https://github.com/ayan-singha-roy/team-portfolio",
-    demo: "https://team-portfolio.example.com",
+    id: "legalmetrix",
+    name: "LegalMetriX",
+    description:
+      "Packaged commodity compliance analysis platform — upload, OCR, AI review, persist.",
+    tech: ["FastAPI", "MongoDB", "Gemini AI", "OCR"],
+    features: ["OCR extraction", "Gemini analysis", "Inspection history"],
+    github: "https://github.com/sroyayan/LegalMetriX",
     status: "wip",
+  },
+  {
+    id: "leetcode",
+    name: "LeetCode Solutions",
+    description: "Daily DSA practice solved in Python — progress across Easy, Medium and Hard.",
+    tech: ["Python", "DSA"],
+    features: ["150+ problems", "Python solutions"],
+    github: "https://github.com/sroyayan/LeetCode",
+    status: "live",
+  },
+  {
+    id: "network-packet-analyzer",
+    name: "Network Packet Analyzer",
+    description: "A Python packet capture and inspection tool for network analysis.",
+    tech: ["Python"],
+    features: ["Packet capture", "Protocol inspection"],
+    github: "https://github.com/sroyayan/network-packet-analyzer",
+    status: "live",
   },
 ];
 
-export const LEETCODE = {
-  total: 152,
-  easy: 92,
-  medium: 55,
-  hard: 5,
-  streak: 32,
-  badges: ["50 Days Badge", "100 Solved", "Daily Challenge"],
-};
-
-export const GITHUB_STATS = {
-  repos: 24,
-  contributions: 487,
-  followers: 38,
-  languages: [
-    { name: "Python", pct: 38, color: "var(--color-accent)" },
-    { name: "JavaScript", pct: 27, color: "var(--color-warning)" },
-    { name: "TypeScript", pct: 18, color: "var(--color-purple)" },
-    { name: "C", pct: 10, color: "var(--color-pink)" },
-    { name: "Other", pct: 7, color: "var(--color-muted-foreground)" },
-  ],
-};
+// Note: GitHub stats are now fetched live from the GitHub API in the github.stats
+// panel (src/services/github.ts) — no hardcoded GITHUB_STATS object.
+// LeetCode stats are fetched live in the leetcode.stats panel
+// (src/services/leetcode.ts) — no hardcoded LEETCODE object.
 
 export const ACHIEVEMENTS = [
   { label: "100+ LeetCode Problems", icon: "🏆" },

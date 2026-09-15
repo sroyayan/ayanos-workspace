@@ -1,16 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import type { FileId } from "@/lib/ayanos-data";
-import {
-  PROFILE,
-  SOCIALS,
-  LEETCODE,
-  GITHUB_STATS,
-  SKILLS,
-  PROJECTS,
-  FILE_ORDER,
-  LIVE_STATUS,
-} from "@/lib/ayanos-data";
+import { PROFILE, SOCIALS, SKILLS, PROJECTS, FILE_ORDER, LIVE_STATUS } from "@/lib/ayanos-data";
+import { toggleTheme } from "@/lib/theme";
+import { getSession } from "@/lib/session";
 
 type Line = { id: number; type: "in" | "out" | "ok" | "err"; text: string };
 
@@ -23,13 +16,17 @@ const HELP = `Available commands:
   skills      — list skills
   projects    — list projects
   resume      — open resume
-  leetcode    — LeetCode stats
-  github      — GitHub stats
+  leetcode    — open leetcode.stats (live)
+  github      — open github.stats (live)
+  linkedin    — open LinkedIn profile
+  instagram   — open Instagram profile
   contact     — contact info
   socials     — social links
   ls          — list explorer files
   whoami      — who am i?
   status      — live status
+  theme       — toggle AyanOS theme
+  uptime      — show session uptime
   open <file> — open a file (e.g. open about.md)
   clear       — clear terminal
   exit        — close terminal`;
@@ -135,18 +132,28 @@ export function Terminal({
         onOpenFile("resume.pdf");
         break;
       case "leetcode":
-        push(
-          "out",
-          `Solved: ${LEETCODE.total}  |  E:${LEETCODE.easy}  M:${LEETCODE.medium}  H:${LEETCODE.hard}  |  Streak: ${LEETCODE.streak}d`,
-        );
-        onOpenFile("leetcode.log");
+        push("out", `Live stats: ${PROFILE.leetcode}\nOpening leetcode.stats…`);
+        onOpenFile("leetcode.stats");
         break;
       case "github":
-        push(
-          "out",
-          `Repos: ${GITHUB_STATS.repos}  |  Contributions: ${GITHUB_STATS.contributions}`,
-        );
+        push("out", `Profile: ${PROFILE.github}\nOpening github.stats for live data…`);
         onOpenFile("github.stats");
+        break;
+      case "linkedin":
+        push("out", `LinkedIn: ${PROFILE.linkedin}\nOpening browser…`);
+        window.open(PROFILE.linkedin, "_blank", "noopener,noreferrer");
+        break;
+      case "instagram":
+        push("out", `Instagram: ${PROFILE.instagram}\nOpening browser…`);
+        window.open(PROFILE.instagram, "_blank", "noopener,noreferrer");
+        break;
+      case "theme": {
+        const next = toggleTheme();
+        push("ok", next === "hacker" ? "Switched to Hacker Green." : "Switched to AyanOS Dark.");
+        break;
+      }
+      case "uptime":
+        push("out", `Uptime: ${getSession().uptime} (session since boot)`);
         break;
       case "contact":
         push("out", `${PROFILE.email}\n${PROFILE.github}\n${PROFILE.linkedin}`);

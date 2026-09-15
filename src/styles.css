@@ -216,6 +216,53 @@
   }
 }
 
+/* ── Hacker Green theme ─────────────────────────────── */
+/* Applied via the `data-theme` attribute on <html> (see src/lib/theme.ts).
+   Overrides the oklch palette with a phosphor-green CRT terminal scheme. */
+[data-theme="hacker"] {
+  --background: oklch(0.13 0.02 145);
+  --foreground: oklch(0.92 0.12 145);
+
+  --card: oklch(0.17 0.03 145);
+  --card-foreground: oklch(0.92 0.12 145);
+
+  --popover: oklch(0.17 0.03 145);
+  --popover-foreground: oklch(0.92 0.12 145);
+
+  --primary: oklch(0.78 0.19 145);
+  --primary-foreground: oklch(0.13 0.02 145);
+
+  --secondary: oklch(0.2 0.03 145);
+  --secondary-foreground: oklch(0.92 0.12 145);
+
+  --muted: oklch(0.2 0.03 145);
+  --muted-foreground: oklch(0.72 0.07 145);
+
+  --accent: oklch(0.78 0.19 145);
+  --accent-foreground: oklch(0.13 0.02 145);
+
+  --destructive: oklch(0.68 0.21 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(0.3 0.05 145);
+  --input: oklch(0.24 0.03 145);
+  --ring: oklch(0.78 0.19 145);
+
+  --success: oklch(0.78 0.19 145);
+  --warning: oklch(0.82 0.16 80);
+  --purple: oklch(0.76 0.13 145);
+  --pink: oklch(0.74 0.15 25);
+  --orange: oklch(0.76 0.17 60);
+
+  --sidebar: oklch(0.15 0.025 145);
+  --sidebar-foreground: oklch(0.83 0.09 145);
+  --titlebar: oklch(0.19 0.03 145);
+  --status: oklch(0.32 0.1 145);
+  --status-foreground: oklch(0.13 0.02 145);
+
+  color-scheme: dark;
+}
+
 /* ── Reduced motion ─────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
