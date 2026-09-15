@@ -3,8 +3,9 @@ import { getSession } from "@/lib/session";
 import { getTheme, onThemeChange, type Theme } from "@/lib/theme";
 
 function useNow(tickMs = 1000) {
-  const [now, setNow] = useState(() => new Date());
+  const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
+    setNow(new Date());
     const t = setInterval(() => setNow(new Date()), tickMs);
     return () => clearInterval(t);
   }, [tickMs]);
@@ -12,8 +13,11 @@ function useNow(tickMs = 1000) {
 }
 
 function useThemeValue() {
-  const [theme, setTheme] = useState<Theme>(() => getTheme());
-  useEffect(() => onThemeChange(setTheme), []);
+  const [theme, setTheme] = useState<Theme>("dark");
+  useEffect(() => {
+    setTheme(getTheme());
+    return onThemeChange(setTheme);
+  }, []);
   return theme;
 }
 
@@ -23,24 +27,35 @@ const GITHUB_STATUS = "main · clean";
 export function SystemStatus() {
   const now = useNow(1000);
   const theme = useThemeValue();
-  const session = getSession();
+  const [session, setSession] = useState<ReturnType<typeof getSession> | null>(null);
 
-  const time = now.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-  const date = now.toLocaleDateString("en-IN", {
-    weekday: "short",
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
+  useEffect(() => {
+    const updateSession = () => setSession(getSession());
+    updateSession();
+    const timer = setInterval(updateSession, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const time = now
+    ? now.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      })
+    : "--:--:--";
+  const date = now
+    ? now.toLocaleDateString("en-IN", {
+        weekday: "short",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+    : "---, -- --- ----";
 
   const rows: { k: string; v: string; color?: string }[] = [
     { k: "time", v: time },
     { k: "date", v: date },
-    { k: "uptime", v: session.uptime },
+    { k: "uptime", v: session?.uptime ?? "--" },
     { k: "git", v: GITHUB_STATUS },
     { k: "theme", v: theme, color: "var(--color-accent)" },
   ];

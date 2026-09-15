@@ -69,7 +69,7 @@ const ACTIVITIES: {
 function AyanOS() {
   const isMobile = useIsMobile();
   const notify = useNotify();
-  const [theme, setTheme] = useState<"dark" | "hacker">(() => getTheme());
+  const [theme, setTheme] = useState<"dark" | "hacker">("dark");
   // Server renders booted=true so the main content shows. On first visit, the
   // client's useEffect flips booted→false to show the boot overlay (a brief
   // flash is unavoidable since sessionStorage can't be read during SSR).
@@ -120,8 +120,11 @@ function AyanOS() {
     if (isMobile) setSidebarOpen(false);
   }, [isMobile]);
 
-  // Keep the header icon in sync when the theme is changed elsewhere (e.g. terminal).
-  useEffect(() => onThemeChange(setTheme), []);
+  // Read persisted theme after hydration, then stay in sync with other controls.
+  useEffect(() => {
+    setTheme(getTheme());
+    return onThemeChange(setTheme);
+  }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
