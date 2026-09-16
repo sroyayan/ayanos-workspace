@@ -67,16 +67,28 @@ interface GraphQLBody<T> {
 }
 
 async function graphQL<T>(query: string, variables: Record<string, unknown>): Promise<T> {
-  const res = await fetch(GRAPHQL_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Referer: `https://leetcode.com/u/${USERNAME}/`,
-      "User-Agent": "ayanos-workspace (portfolio)",
-    },
-    body: JSON.stringify({ query, variables }),
-  });
+  // NOTE: Browsers strip custom Referer and User-Agent headers on cross-origin
+  // requests. LeetCode's bot protection may return 403 or silently block the
+  // request. A true fix requires a server-side proxy. Error handling below
+  // degrades gracefully and shows a fallback link to the live profile.
+  let res: Response;
+  try {
+    res = await fetch(GRAPHQL_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Referer: `https://leetcode.com/u/${USERNAME}/`,
+        "User-Agent": "ayanos-workspace (portfolio)",
+      },
+      body: JSON.stringify({ query, variables }),
+    });
+  } catch {
+    // TypeError = network error / CORS block — the browser could not reach the endpoint.
+    throw new Error(
+      "Could not reach LeetCode (network or CORS error). Live stats unavailable in this browser context.",
+    );
+  }
 
   if (!res.ok) {
     if (res.status === 403) {

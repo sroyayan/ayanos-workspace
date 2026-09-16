@@ -16,7 +16,13 @@ export function getTheme(): Theme {
   return stored === "hacker" ? "hacker" : "dark";
 }
 
-/** Apply the persisted theme before first paint (call in <head>). */
+/** Apply the persisted theme before first paint (call in <head>).
+ *
+ * @deprecated Not called directly — the app uses an inline `<script>` in
+ * `__root.tsx`'s `<head>` (via `dangerouslySetInnerHTML`) to apply the theme
+ * before first paint without a FOUC. `initTheme()` is kept here in case a
+ * non-SSR integration needs it, but is otherwise dead code.
+ */
 export function initTheme(): void {
   apply(getTheme());
 }

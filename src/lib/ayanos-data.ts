@@ -34,8 +34,9 @@ export const PROFILE = {
   tagline:
     "Passionate about building software, learning web development, solving coding problems, and exploring AI. I like shipping things that work, then making them faster.",
   location: "West Bengal, India",
-  // TODO: replace with the real email before going live
-  email: "ayan.singharoy@example.com",
+  // ⚠️  DEPLOYMENT REQUIRED: Replace with your real email address before going live.
+  //     All mailto: links and the contact form fallback use this value.
+  email: "ayans.royayan@gmail.com",
   github: "https://github.com/sroyayan",
   githubUsername: "sroyayan",
   linkedin: "https://linkedin.com/in/sroyayan",

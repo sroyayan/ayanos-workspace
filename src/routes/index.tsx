@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { BootSequence } from "@/components/ayanos/BootSequence";
@@ -439,23 +439,29 @@ function Row({ k, v, color }: { k: string; v: string; color?: string }) {
 }
 
 function PanelFor({ id }: { id: FileId }) {
-  // useMemo to avoid re-mount churn within an id
-  return useMemo(() => {
-    switch (id) {
-      case "about.md":
-        return <AboutPanel />;
-      case "skills.json":
-        return <SkillsPanel />;
-      case "projects":
-        return <ProjectsPanel />;
-      case "leetcode.stats":
-        return <LeetcodePanel />;
-      case "github.stats":
-        return <GithubPanel />;
-      case "resume.pdf":
-        return <ResumePanel />;
-      case "contact.md":
-        return <ContactPanel />;
+  // Plain switch render — do NOT use useMemo to return JSX; useMemo is for
+  // caching computed values, not for rendering. React handles reconciliation.
+  switch (id) {
+    case "about.md":
+      return <AboutPanel />;
+    case "skills.json":
+      return <SkillsPanel />;
+    case "projects":
+      return <ProjectsPanel />;
+    case "leetcode.stats":
+      return <LeetcodePanel />;
+    case "github.stats":
+      return <GithubPanel />;
+    case "resume.pdf":
+      return <ResumePanel />;
+    case "contact.md":
+      return <ContactPanel />;
+    default: {
+      // Exhaustive check: TypeScript will error here if a new FileId is added
+      // without a corresponding case above.
+      const _exhaustive: never = id;
+      console.warn("PanelFor: unhandled FileId", _exhaustive);
+      return null;
     }
-  }, [id]);
+  }
 }

@@ -54,7 +54,7 @@ export function AboutPanel() {
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center font-mono text-5xl font-bold text-foreground">
-              AR
+              AS
             </div>
           )}
           <span
@@ -556,7 +556,11 @@ export function LeetcodePanel() {
     return <LeetCodeError message={error.message} />;
   }
 
-  const profile = profileQuery.data!;
+  // profileQuery.data is guaranteed by the isLoading + error guards above,
+  // but we use optional chaining defensively to avoid crashes on edge cases
+  // (e.g. a query cancelled mid-flight).
+  const profile = profileQuery.data;
+  if (!profile) return null;
   const solved = solvedByDifficulty(profile);
   const submissions = submissionsQuery.data ?? [];
   const badges = profile.badges ?? [];

@@ -60,9 +60,11 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
     [dismiss],
   );
 
-  // Cleanup timers on unmount
+  // Cleanup timers on unmount — capture the map reference into a local
+  // variable so the cleanup closure doesn't capture a stale .current ref.
   useEffect(() => {
-    return () => timers.current.forEach((t) => clearTimeout(t));
+    const timersMap = timers.current;
+    return () => timersMap.forEach((t) => clearTimeout(t));
   }, []);
 
   return (
