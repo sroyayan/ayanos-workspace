@@ -36,7 +36,7 @@ export const PROFILE = {
   location: "West Bengal, India",
   // ⚠️  DEPLOYMENT REQUIRED: Replace with your real email address before going live.
   //     All mailto: links and the contact form fallback use this value.
-  email: "ayansingharoy7906@.com",
+  email: "ayansingharoy7906@gmail.com",
   github: "https://github.com/sroyayan",
   githubUsername: "sroyayan",
   linkedin: "https://linkedin.com/in/sroyayan",
