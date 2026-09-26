@@ -22,7 +22,6 @@ export const FILE_ORDER: FileId[] = [
  * deployed so canonical/og:url point at the live site.
  */
 export const SITE = {
-  url: "https://ayansingharoy.dev",
   title: "AyanOS — Ayan Singha Roy",
   description:
     "AyanOS — a developer operating system portfolio for Ayan Singha Roy. B.Tech CSE (AI & ML). Projects, LeetCode, GitHub stats and more.",
@@ -40,8 +39,8 @@ export const PROFILE = {
   github: "https://github.com/sroyayan",
   githubUsername: "sroyayan",
   linkedin: "https://linkedin.com/in/sroyayan",
-  leetcode: "https://leetcode.com/u/ayanrsoy/",
-  leetcodeUsername: "ayanrsoy",
+  leetcode: "https://leetcode.com/u/ayansroy/",
+  leetcodeUsername: "ayansroy",
   instagram: "https://www.instagram.com/4yan_s.r0y/",
 };
 
@@ -174,13 +173,7 @@ export const PROJECTS: Project[] = [
 // LeetCode stats are fetched live in the leetcode.stats panel
 // (src/services/leetcode.ts) — no hardcoded LEETCODE object.
 
-export const ACHIEVEMENTS = [
-  { label: "100+ LeetCode Problems", icon: "🏆" },
-  { label: "Hackathon Participant", icon: "⚡" },
-  { label: "Coding Club Member", icon: "👥" },
-  { label: "Open Source Contributor", icon: "🌱" },
-  { label: "Python Developer", icon: "🐍" },
-];
+
 
 export const LIVE_STATUS = {
   learning: "React",

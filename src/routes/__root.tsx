@@ -127,7 +127,7 @@ const jsonLd = {
   sameAs: [
     "https://github.com/sroyayan",
     "https://www.linkedin.com/in/sroyayan",
-    "https://leetcode.com/u/ayanrsoy/",
+    "https://leetcode.com/u/ayansroy/",
     "https://www.instagram.com/4yan_s.r0y/",
   ],
   knowsAbout: [
