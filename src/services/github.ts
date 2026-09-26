@@ -31,9 +31,6 @@ export interface GitHubRepo {
   visibility: "public" | "private";
 }
 
-export interface GitHubLanguages {
-  [language: string]: number;
-}
 
 const GITHUB_API = "https://api.github.com";
 const USERNAME = PROFILE.githubUsername;
@@ -73,61 +70,3 @@ export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
   );
 }
 
-export async function fetchRepoLanguages(repo: string): Promise<GitHubLanguages> {
-  return fetchWithError<GitHubLanguages>(`${GITHUB_API}/repos/${USERNAME}/${repo}/languages`);
-}
-
-export async function fetchAllRepoLanguages(repos: GitHubRepo[]): Promise<GitHubLanguages> {
-  const languageTotals: GitHubLanguages = {};
-
-  for (const repo of repos) {
-    if (repo.visibility === "private") continue;
-    try {
-      const langs = await fetchRepoLanguages(repo.name);
-      for (const [lang, bytes] of Object.entries(langs)) {
-        languageTotals[lang] = (languageTotals[lang] || 0) + bytes;
-      }
-    } catch {
-      continue;
-    }
-  }
-
-  return languageTotals;
-}
-
-export function computeLanguagePercentages(languages: GitHubLanguages): {
-  name: string;
-  pct: number;
-  color: string;
-}[] {
-  const totalBytes = Object.values(languages).reduce((a, b) => a + b, 0);
-  if (totalBytes === 0) return [];
-
-  const languageColors: Record<string, string> = {
-    Python: "var(--color-accent)",
-    JavaScript: "var(--color-warning)",
-    TypeScript: "var(--color-purple)",
-    C: "var(--color-pink)",
-    "C++": "var(--color-pink)",
-    CSS: "var(--color-accent)",
-    HTML: "var(--color-orange)",
-    Rust: "var(--color-orange)",
-    Go: "var(--color-success)",
-    Java: "var(--color-destructive)",
-    Shell: "var(--color-muted-foreground)",
-    Dockerfile: "var(--color-success)",
-    Vue: "var(--color-success)",
-    Svelte: "var(--color-orange)",
-    Jupyter: "var(--color-warning)",
-    MDX: "var(--color-muted-foreground)",
-  };
-
-  return Object.entries(languages)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, 8)
-    .map(([name, bytes]) => ({
-      name,
-      pct: Math.round((bytes / totalBytes) * 100),
-      color: languageColors[name] || "var(--color-muted-foreground)",
-    }));
-}

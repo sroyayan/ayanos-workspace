@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import {
@@ -675,6 +675,13 @@ function Stat({ label, value, color }: { label: string; value: number; color: st
 
 /* ---------- github.stats ---------- */
 export function GithubPanel() {
+  const [fetchedAt, setFetchedAt] = useState<string | null>(null);
+
+  useEffect(() => {
+    setFetchedAt(
+      new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    );
+  }, []);
   const profileQuery = useQuery({
     queryKey: ["github", "profile"],
     queryFn: fetchGitHubProfile,
@@ -903,7 +910,7 @@ export function GithubPanel() {
 
       <p className="font-mono text-[11px] text-muted-foreground">
         <span aria-hidden="true">$</span> Live data — last fetched:{" "}
-        {new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+        {fetchedAt ?? "--:--"}
       </p>
     </div>
   );

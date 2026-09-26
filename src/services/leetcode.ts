@@ -109,7 +109,13 @@ async function graphQL<T>(query: string, variables: Record<string, unknown>): Pr
 
 /** Full public profile (stats + contest ranking + badges) for PROFILE.leetcodeUsername. */
 export async function fetchLeetCodeProfile(): Promise<LeetCodeProfile> {
-  return graphQL<LeetCodeProfile>(PROFILE_QUERY, { username: USERNAME });
+  const data = await graphQL<{ matchedUser: LeetCodeProfile | null }>(PROFILE_QUERY, {
+    username: USERNAME,
+  });
+  if (!data.matchedUser) {
+    throw new Error(`User "${USERNAME}" not found on LeetCode.`);
+  }
+  return data.matchedUser;
 }
 
 /** Contest ranking (rating is null until the user attends their first contest). */
