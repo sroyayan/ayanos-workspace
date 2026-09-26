@@ -1,12 +1,8 @@
 import { PROFILE } from "@/lib/ayanos-data";
 
 /**
- * LeetCode has no official public REST API. The public profile data is served
- * through the same GraphQL endpoint the website itself uses:
- *   https://leetcode.com/graphql
- * It requires a same-origin Referer/User-Agent header combo, otherwise
- * LeetCode's bot protection returns 403. Unauthenticated access returns
- * public-profile only (no email, no full submission history).
+ * Using a free proxy API for LeetCode stats since the official GraphQL endpoint
+ * blocks browser requests (CORS + Bot Protection).
  */
 
 export interface LeetCodeProfile {
@@ -40,105 +36,82 @@ export const LEETCODE_STATUS = {
   accepted: 10,
 } as const;
 
-const GRAPHQL_URL = "https://leetcode.com/graphql";
 const USERNAME = PROFILE.leetcodeUsername;
+const API_URL = `https://leetcode-api-faisalshohag.vercel.app/${USERNAME}`;
 
-const PROFILE_QUERY = `query userProfilePublicProfile($username: String!) {
-  matchedUser(username: $username) {
-    username
-    profile { realName userAvatar ranking reputation }
-    submitStatsGlobal { acSubmissionNum { difficulty count } }
-    badges { id displayName icon }
+let cachedData: any = null;
+let cachedTime = 0;
+
+async function fetchLeetcodeApi() {
+  if (cachedData && Date.now() - cachedTime < 60000) {
+    return cachedData;
   }
-  userContestRanking(username: $username) {
-    rating attendedContestsCount globalRanking
-  }
-}`;
-
-const SUBMISSION_QUERY = `query recentSubmissions($username: String!, $limit: Int) {
-  recentSubmissionList(username: $username, limit: $limit) {
-    title titleSlug timestamp status
-  }
-}`;
-
-interface GraphQLBody<T> {
-  data?: T;
-  errors?: { message: string }[];
-}
-
-async function graphQL<T>(query: string, variables: Record<string, unknown>): Promise<T> {
-  // NOTE: Browsers strip custom Referer and User-Agent headers on cross-origin
-  // requests. LeetCode's bot protection may return 403 or silently block the
-  // request. A true fix requires a server-side proxy. Error handling below
-  // degrades gracefully and shows a fallback link to the live profile.
   let res: Response;
   try {
-    res = await fetch(GRAPHQL_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Referer: `https://leetcode.com/u/${USERNAME}/`,
-        "User-Agent": "ayanos-workspace (portfolio)",
-      },
-      body: JSON.stringify({ query, variables }),
-    });
+    res = await fetch(API_URL);
   } catch {
-    // TypeError = network error / CORS block — the browser could not reach the endpoint.
-    throw new Error(
-      "Could not reach LeetCode (network or CORS error). Live stats unavailable in this browser context.",
-    );
+    throw new Error("Could not reach LeetCode API proxy.");
   }
-
+  
   if (!res.ok) {
-    if (res.status === 403) {
-      throw new Error("LeetCode is rate-limiting requests right now. Try again in a minute.");
+    if (res.status === 429) {
+      throw new Error("LeetCode API is rate-limiting requests right now. Try again in a minute.");
     }
     throw new Error(`LeetCode API error: ${res.status} ${res.statusText}`);
   }
 
-  const json: GraphQLBody<T> = (await res.json()) as GraphQLBody<T>;
-  if (json.errors?.length) {
-    throw new Error(json.errors[0].message ?? "LeetCode API error.");
+  const data = await res.json();
+  if (data.errors) {
+    throw new Error(data.errors[0]?.message ?? `User "${USERNAME}" not found.`);
   }
-  if (!json.data) {
-    throw new Error(`User "${USERNAME}" not found on LeetCode.`);
-  }
-  return json.data;
+
+  cachedData = data;
+  cachedTime = Date.now();
+  return data;
 }
 
 /** Full public profile (stats + contest ranking + badges) for PROFILE.leetcodeUsername. */
 export async function fetchLeetCodeProfile(): Promise<LeetCodeProfile> {
-  const data = await graphQL<{ matchedUser: LeetCodeProfile | null }>(PROFILE_QUERY, {
-    username: USERNAME,
-  });
-  if (!data.matchedUser) {
+  const data = await fetchLeetcodeApi();
+
+  if (data.errors || !data.totalSolved && data.totalSolved !== 0) {
     throw new Error(`User "${USERNAME}" not found on LeetCode.`);
   }
-  return data.matchedUser;
+
+  return {
+    username: USERNAME,
+    profile: {
+      realName: null, // The proxy API doesn't return realName
+      userAvatar: null, // The proxy API doesn't return userAvatar
+      ranking: data.ranking ?? 0,
+      reputation: data.reputation ?? 0,
+    },
+    submitStatsGlobal: {
+      acSubmissionNum: data.matchedUserStats?.acSubmissionNum ?? [],
+    },
+    badges: [], // The proxy API doesn't return badges
+  };
 }
 
 /** Contest ranking (rating is null until the user attends their first contest). */
 export async function fetchLeetCodeContest(): Promise<LeetCodeContest> {
-  const data = await graphQL<{ userContestRanking: LeetCodeContest | null }>(PROFILE_QUERY, {
-    username: USERNAME,
-  });
-  return (
-    data.userContestRanking ?? {
-      rating: null,
-      attendedContestsCount: null,
-      globalRanking: null,
-    }
-  );
+  return {
+    rating: null,
+    attendedContestsCount: null,
+    globalRanking: null,
+  };
 }
 
 /** Most recent accepted submissions (a few user count, no auth needed). */
 export async function fetchLeetCodeRecentSubmissions(limit = 5): Promise<LeetCodeSubmission[]> {
-  const data = await graphQL<{ recentSubmissionList: LeetCodeSubmission[] }>(SUBMISSION_QUERY, {
-    username: USERNAME,
-    limit,
-  });
-  return data.recentSubmissionList ?? [];
+  const data = await fetchLeetcodeApi();
+  const recent = data.recentSubmissions ?? [];
+  return recent.slice(0, limit).map((s: any) => ({
+    title: s.title,
+    titleSlug: s.titleSlug,
+    timestamp: s.timestamp,
+    status: s.statusDisplay === "Accepted" ? 10 : 0,
+  }));
 }
 
 /** "Accepted AFL" vs "Accepted #" helper: submitStats acSubmissionNum count per difficulty. */
@@ -159,3 +132,4 @@ export function solvedByDifficulty(profile: LeetCodeProfile): {
     hard: byDifficulty["hard"] ?? 0,
   };
 }
+

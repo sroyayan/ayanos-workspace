@@ -923,79 +923,27 @@ function ResumeRow({ k, v }: { k: string; v: string }) {
 }
 
 export function ResumePanel() {
-  const resumeRef = useRef<HTMLDivElement>(null);
-  const notify = useNotify();
-
-  const handlePrint = () => {
-    if (resumeRef.current) {
-      resumeRef.current.dataset.printing = "1";
-      setTimeout(() => {
-        window.print();
-        delete resumeRef.current?.dataset.printing;
-        notify({
-          kind: "success",
-          title: "Print dialog opened",
-          message: "PDF or print from your browser.",
-        });
-      }, 0);
-    }
-  };
-
-  const handleViewFullscreen = () => {
-    if (!resumeRef.current) return;
-    const html = resumeRef.current.innerHTML;
-    const printWindow = window.open("", "_blank", "width=900,height=1100");
-    if (!printWindow) return;
-    printWindow.document.write(`<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<title>${PROFILE.name} — Resume</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: ui-monospace, monospace; background: #0a0a0f; color: #e0e0e8; padding: 2rem; }
-  h2 { font-size: 1.5rem; font-weight: 700; color: #fff; }
-  h3 { font-size: 0.875rem; font-weight: 600; color: #a8b1ff; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-  p, li { font-size: 0.875rem; line-height: 1.6; color: #c8c8d0; }
-  ul { padding-left: 1rem; }
-  a { color: #a8b1ff; }
-  .muted { color: #666; font-size: 0.75rem; }
-  .skills { display: flex; flex-wrap: wrap; gap: 0.375rem; }
-  .skills span { border: 1px solid #333; padding: 0.125rem 0.5rem; font-size: 0.6875rem; color: #c8c8d0; }
-  .project { border-left: 2px solid rgba(168,177,255,0.4); padding-left: 0.75rem; margin-bottom: 0.75rem; }
-  .project strong { color: #fff; }
-  .project .tech { font-size: 0.625rem; color: #888; }
-  .grid { display: grid; grid-template-columns: 1fr 220px; gap: 1.5rem; }
-  @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
-</style>
-</head>
-<body>${html}</body>
-</html>`);
-    printWindow.document.close();
-  };
-
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center gap-3">
-        <button
-          onClick={handlePrint}
-          className="rounded-md border border-accent bg-accent/10 px-4 py-2 font-mono text-sm text-accent transition-colors hover:bg-accent/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        <a
+          href="/CV.pdf"
+          download="Ayan_Singha_Roy_CV.pdf"
+          className="rounded-md border border-accent bg-accent/10 px-4 py-2 font-mono text-sm text-accent transition-colors hover:bg-accent/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent inline-flex items-center"
         >
           ⎙ Download PDF
-        </button>
-        <button
-          onClick={handleViewFullscreen}
-          className="rounded-md border border-border px-4 py-2 font-mono text-sm text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        </a>
+        <a
+          href="/CV.pdf"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-md border border-border px-4 py-2 font-mono text-sm text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent inline-flex items-center"
         >
           ⊡ View Full Screen
-        </button>
-        <span className="font-mono text-xs text-muted-foreground">
-          Tip: use "Save as PDF" in the print dialog to download.
-        </span>
+        </a>
       </div>
 
       <div
-        ref={resumeRef}
         className="print-resume overflow-hidden rounded-lg border border-border bg-card"
       >
         {/* Resume header */}
@@ -1191,7 +1139,7 @@ const contactLinks: { key: string; label: string; value: string; href: string; i
   {
     key: "leetcode",
     label: "LeetCode",
-    value: "u/ayanrsoy",
+    value: `u/${PROFILE.leetcodeUsername}`,
     href: PROFILE.leetcode,
     icon: "λ",
   },
