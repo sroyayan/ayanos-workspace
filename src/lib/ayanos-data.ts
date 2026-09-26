@@ -39,8 +39,8 @@ export const PROFILE = {
   github: "https://github.com/sroyayan",
   githubUsername: "sroyayan",
   linkedin: "https://linkedin.com/in/sroyayan",
-  leetcode: "https://leetcode.com/u/ayansroy/",
-  leetcodeUsername: "ayansroy",
+  leetcode: "https://leetcode.com/u/sroyayan/",
+  leetcodeUsername: "sroyayan",
   instagram: "https://www.instagram.com/4yan_s.r0y/",
 };
 
@@ -49,7 +49,7 @@ export const SOCIALS = [
   {
     key: "leetcode",
     label: "LeetCode",
-    handle: "u/ayanrsoy",
+    handle: "u/sroyayan",
     href: PROFILE.leetcode,
     icon: "λ",
   },
@@ -84,34 +84,37 @@ export type SkillCategory = keyof typeof SKILLS;
 export const SKILLS = {
   languages: [
     { name: "Python", level: 5 },
-    { name: "JavaScript", level: 4 },
-    { name: "TypeScript", level: 3 },
-    { name: "C", level: 3 },
+    { name: "C", level: 4 },
+    { name: "SQL", level: 4 },
   ],
-  frontend: [
-    { name: "HTML", level: 5 },
-    { name: "CSS", level: 4 },
-    { name: "React", level: 3 },
-    { name: "Tailwind", level: 4 },
+  libraries: [
+    { name: "FastAPI", level: 4 },
+    { name: "NumPy", level: 3 },
+    { name: "Pandas", level: 3 },
+    { name: "Pillow (PIL)", level: 4 },
+    { name: "Tkinter", level: 4 },
+    { name: "Scapy", level: 3 },
   ],
   tools: [
-    { name: "Git", level: 4 },
-    { name: "GitHub", level: 4 },
+    { name: "Git & GitHub", level: 5 },
     { name: "VS Code", level: 5 },
-    { name: "Linux / Bash", level: 3 },
+    { name: "MongoDB", level: 4 },
+    { name: "Linux", level: 3 },
   ],
-  learning: [
-    { name: "Node.js", level: 2 },
-    { name: "AI / ML", level: 2 },
-    { name: "DSA", level: 3 },
+  concepts: [
+    { name: "Machine Learning", level: 3 },
+    { name: "Cybersecurity", level: 4 },
+    { name: "Networking", level: 3 },
+    { name: "OOP", level: 4 },
+    { name: "DSA", level: 4 },
   ],
 } as Record<string, Skill[]>;
 
 export const SKILL_META: Record<string, { icon: string; color: string }> = {
   languages: { icon: "λ", color: "var(--color-warning)" },
-  frontend: { icon: "◈", color: "var(--color-accent)" },
+  libraries: { icon: "◈", color: "var(--color-accent)" },
   tools: { icon: "⚙", color: "var(--color-success)" },
-  learning: { icon: "✦", color: "var(--color-purple)" },
+  concepts: { icon: "✦", color: "var(--color-purple)" },
 };
 
 export const LEVEL_LABELS = ["", "Familiar", "Working", "Proficient", "Advanced", "Expert"];
@@ -129,43 +132,61 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
-    id: "agriguard-ai",
-    name: "AgriGuard AI",
-    description:
-      "AI-powered agricultural pest detection and decision support system using YOLOv11.",
-    tech: ["Python", "YOLOv11", "Jupyter"],
-    features: ["Pest detection", "Decision support", "Computer vision"],
-    github: "https://github.com/sroyayan/AgriGuard-AI",
-    status: "live",
-  },
-  {
     id: "legalmetrix",
     name: "LegalMetriX",
     description:
-      "Packaged commodity compliance analysis platform — upload, OCR, AI review, persist.",
-    tech: ["FastAPI", "MongoDB", "Gemini AI", "OCR"],
-    features: ["OCR extraction", "Gemini analysis", "Inspection history"],
+      "AI-powered compliance verification system for packaged commodities using FastAPI, MongoDB, OCR, and Gemini Vision API.",
+    tech: ["Python", "FastAPI", "MongoDB", "OCR", "Gemini Vision"],
+    features: ["OCR extraction", "Gemini analysis", "Compliance verification"],
     github: "https://github.com/sroyayan/LegalMetriX",
     status: "wip",
   },
   {
-    id: "leetcode",
-    name: "LeetCode Solutions",
-    description: "Daily DSA practice solved in Python — progress across Easy, Medium and Hard.",
-    tech: ["Python", "DSA"],
-    features: ["150+ problems", "Python solutions"],
-    github: "https://github.com/sroyayan/LeetCode",
-    status: "live",
+    id: "agriguard-ai",
+    name: "AgriGuard AI",
+    description:
+      "AI-powered crop disease detection and plant health monitoring platform using machine learning and image analysis.",
+    tech: ["Python", "Machine Learning"],
+    features: ["Disease identification", "Treatment suggestions", "Computer vision"],
+    github: "https://github.com/sroyayan/AgriGuard-AI",
+    status: "wip",
   },
   {
     id: "network-packet-analyzer",
     name: "Network Packet Analyzer",
-    description: "A Python packet capture and inspection tool for network analysis.",
-    tech: ["Python"],
-    features: ["Packet capture", "Protocol inspection"],
+    description: "A Python packet analysis tool capable of capturing and inspecting live network traffic using Scapy.",
+    tech: ["Python", "Scapy"],
+    features: ["Packet capture", "Protocol inspection", "TCP/UDP/ICMP analysis"],
     github: "https://github.com/sroyayan/network-packet-analyzer",
     status: "live",
   },
+  {
+    id: "keyboard-activity-monitor",
+    name: "Keyboard Activity Monitor",
+    description: "A desktop-based keyboard activity monitoring application with activity logs and timestamps.",
+    tech: ["Python", "Tkinter"],
+    features: ["Keystroke logging", "Activity logs", "GUI"],
+    github: "https://github.com/sroyayan/keyboard_activity_monitor",
+    status: "live",
+  },
+  {
+    id: "image-encryption-tool",
+    name: "Image Encryption Tool",
+    description: "An image encryption and decryption application using pixel-level transformations.",
+    tech: ["Python", "Pillow (PIL)"],
+    features: ["Pixel transformation", "Security workflows"],
+    github: "https://github.com/sroyayan/image-encryption-tool",
+    status: "live",
+  },
+  {
+    id: "caesar-cipher",
+    name: "Caesar Cipher Encryption Tool",
+    description: "A cryptography application implementing Caesar Cipher encryption and decryption.",
+    tech: ["Python"],
+    features: ["Encryption/Decryption", "Interactive text processing"],
+    github: "https://github.com/sroyayan/caesar-cipher",
+    status: "live",
+  }
 ];
 
 // Note: GitHub stats are now fetched live from the GitHub API in the github.stats
@@ -174,6 +195,43 @@ export const PROJECTS: Project[] = [
 // (src/services/leetcode.ts) — no hardcoded LEETCODE object.
 
 
+
+export const EDUCATION = [
+  {
+    institution: "Sanaka Educational Trust's Group of Institutions",
+    degree: "B.Tech in Computer Science & Engineering (AI & ML)",
+    year: "2024 – Present",
+  },
+  {
+    institution: "Joypur High School",
+    degree: "Higher Secondary (PCMB) – 85.6%",
+    year: "2024",
+  },
+  {
+    institution: "Changdoba High School",
+    degree: "Madhyamik – 76.42%",
+    year: "2022",
+  },
+];
+
+export const EXPERIENCE = [
+  {
+    role: "Cybersecurity Intern",
+    company: "Prodigy InfoTech",
+    year: "2026",
+    details: [
+      "Completed a cybersecurity internship focused on developing Python-based security and monitoring tools.",
+      "Designed and implemented encryption systems, activity monitoring applications, and network traffic analysis tools.",
+      "Applied concepts of cryptography, packet inspection, logging, and system monitoring in practical projects.",
+      "Utilized Git and GitHub for version control, documentation, and project management.",
+    ],
+  },
+];
+
+export const CERTIFICATIONS = [
+  "Introduction to GitHub – GitHub Skills",
+  "Generative AI Fundamentals – Google Cloud Skills Boost",
+];
 
 export const LIVE_STATUS = {
   learning: "React",

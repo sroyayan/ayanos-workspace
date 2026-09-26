@@ -10,6 +10,9 @@ import {
   SKILL_META,
   LEVEL_LABELS,
   PROJECTS,
+  EDUCATION,
+  EXPERIENCE,
+  CERTIFICATIONS,
   CONTACT_ENDPOINT,
   type Project,
 } from "@/lib/ayanos-data";
@@ -1035,6 +1038,29 @@ export function ResumePanel() {
             </section>
 
             <section>
+              <SectionLabel text="Experience" />
+              <div className="space-y-4">
+                {EXPERIENCE.map((exp) => (
+                  <div key={exp.role}>
+                    <div className="flex justify-between items-start text-sm">
+                      <span className="font-semibold text-foreground">{exp.role}</span>
+                      <span className="font-mono text-[10px] text-muted-foreground whitespace-nowrap ml-2 mt-0.5">{exp.year}</span>
+                    </div>
+                    <div className="text-xs text-muted-foreground">{exp.company}</div>
+                    <ul className="mt-2 space-y-1">
+                      {exp.details.map((detail, idx) => (
+                        <li key={idx} className="flex gap-2 text-xs text-foreground/80">
+                          <span className="text-muted-foreground mt-0.5" aria-hidden="true">•</span>
+                          <span className="leading-relaxed">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section>
               <SectionLabel text="Projects" />
               <ul className="space-y-3">
                 {PROJECTS.map((p) => (
@@ -1053,27 +1079,27 @@ export function ResumePanel() {
           <aside className="space-y-5 border-t border-border pt-4 md:border-l md:border-t-0 md:pl-5 md:pt-0">
             <section>
               <SectionLabel text="Education" />
-              <p className="text-sm text-foreground">{PROFILE.role}</p>
-              <p className="mt-1 font-mono text-xs text-muted-foreground">West Bengal, India</p>
-            </section>
-            <section>
-              <SectionLabel text="Currently" />
-              <ul className="space-y-1.5 text-sm text-foreground/85">
-                {CURRENT_FOCUS.map((f) => (
-                  <li key={f}>
-                    <span className="text-success" aria-hidden="true">
-                      +{" "}
-                    </span>
-                    {f}
+              <ul className="space-y-4 text-sm text-foreground/85">
+                {EDUCATION.map((edu) => (
+                  <li key={edu.institution}>
+                    <div className="font-semibold text-foreground">{edu.institution}</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">{edu.degree}</div>
+                    <div className="font-mono text-[10px] text-muted-foreground mt-0.5">{edu.year}</div>
                   </li>
                 ))}
               </ul>
             </section>
+            
             <section>
-              <SectionLabel text="Interests" />
-              <p className="text-sm leading-relaxed text-foreground/85">
-                Web development, competitive programming, AI/ML, open source, hackathons.
-              </p>
+              <SectionLabel text="Certifications" />
+              <ul className="space-y-1.5 text-sm text-foreground/85">
+                {CERTIFICATIONS.map((cert) => (
+                  <li key={cert} className="flex gap-2 text-xs text-foreground/80">
+                    <span className="text-success mt-0.5" aria-hidden="true">✔</span>
+                    <span className="leading-relaxed">{cert}</span>
+                  </li>
+                ))}
+              </ul>
             </section>
           </aside>
         </div>
