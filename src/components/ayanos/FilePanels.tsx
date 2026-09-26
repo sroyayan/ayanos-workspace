@@ -10,7 +10,6 @@ import {
   SKILL_META,
   LEVEL_LABELS,
   PROJECTS,
-  ACHIEVEMENTS,
   CONTACT_ENDPOINT,
   type Project,
 } from "@/lib/ayanos-data";
@@ -891,22 +890,7 @@ export function GithubPanel() {
         </div>
       )}
 
-      <div>
-        <SectionLabel text="Achievements" />
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {ACHIEVEMENTS.map((a) => (
-            <div
-              key={a.label}
-              className="flex items-center gap-3 rounded-lg border border-border bg-card px-3 py-2 font-mono text-xs"
-            >
-              <span className="text-base" aria-hidden="true">
-                {a.icon}
-              </span>
-              <span className="text-foreground/90">{a.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+
 
       <p className="font-mono text-[11px] text-muted-foreground">
         <span aria-hidden="true">$</span> Live data — last fetched:{" "}
@@ -1060,18 +1044,6 @@ export function ResumePanel() {
                     <div className="mt-1 font-mono text-[10px] text-foreground/70">
                       {p.tech.join(" · ")}
                     </div>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section>
-              <SectionLabel text="Achievements" />
-              <ul className="grid gap-1.5 sm:grid-cols-2">
-                {ACHIEVEMENTS.map((a) => (
-                  <li key={a.label} className="flex items-center gap-2 text-sm text-foreground/85">
-                    <span aria-hidden="true">{a.icon}</span>
-                    {a.label}
                   </li>
                 ))}
               </ul>
